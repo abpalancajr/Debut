@@ -1,0 +1,16 @@
+{% if settings.show_multiple_currencies %}
+
+<div class = "pick_currency" align="right" style="display: none;"><br \><label for="currencies" style="display: inline;">Pick a currency </label>
+<select id="currencies" name="currencies" style="display: inline;max-height: 50px;max-width: 87px;height:100%;">
+  {% capture codes %}AED,AMD,AOA,ARS,AUD,AWG,AZN,BAM,BBD,BDT,BGN,BHD,BND,BOB,BRL,BSD,BTN,BWP,BYR,BZD,CAD,CHF,CLP,CNY,COP,CRC,CZK,DKK,DOP,DZD,EGP,ETB,EUR,FJD,GBP,GEL,GHS,GMD,GYD,HKD,HNL,HRK,HTG,HUF,IDR,ILS,INR,ISK,JMD,JOD,JPY,KES,KGS,KHR,KRW,KWD,KYD,KZT,LBP,LKR,LTL,MAD,MDL,MGA,MKD,MMK,MNT,MOP,MUR,MVR,MXN,MYR,MZN,NAD,NGN,NIO,NOK,NPR,NZD,OMR,PEN,PGK,PHP,PKR,PLN,PYG,QAR,RON,RSD,RUB,RWF,SAR,SCR,SEK,SGD,STD,SYP,THB,TND,TRY,TTD,TWD,TZS,UAH,UGX,USD,UYU,VEF,VND,VUV,WST,ZAR,ZWL{% endcapture %}
+  {% assign supported_codes = settings.supported_currencies | split: ' ' %}
+  <option value="{{ shop.currency }}" selected="selected">{{ shop.currency }}</option>
+  {% for code in supported_codes %}
+    {% if code != shop.currency and codes contains code %}
+    <option value="{{ code }}">{{ code }}</option>
+    {% endif %}
+  {% endfor %}
+</select>
+<br \></div>
+
+{% endif %}

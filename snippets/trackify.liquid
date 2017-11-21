@@ -1,0 +1,52 @@
+<script>
+trackifyliquidloaded = 1;            
+function appendurl(url) {
+  var script = document.createElement('script');
+  script.setAttribute('type', 'text/javascript');
+  script.setAttribute('src', url);
+  document.head.appendChild(script); 
+}
+function getCookie(cname) {
+  var name = cname + '=';
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1);
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+  }
+  return '';
+}   
+shop_permanent_domain = '{{shop.permanent_domain}}';
+function getUrlParameter(name) {
+  name = name.replace(/[\[]/, '\[').replace(/[\]]/, '\]');
+  var regex = new RegExp('[\?&]' + name + '=([^&#]*)');
+  var results = regex.exec(location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+  a_aid = getUrlParameter('a_aid');
+</script>
+{% assign templatename = template | replace: '.', ' ' | truncatewords: 1, '' | handle %}
+<script>
+if (typeof __st === 'undefined') {
+__st = [];
+{% if templatename == 'product' %}    
+__st['rid'] = {{product.id}};
+{% endif %}    
+}
+</script>
+<script type='text/javascript' src='https://app.redretarget.com/sapp/assets/js/common.js'></script>
+{% if templatename != 'product' and templatename != 'cart' and templatename != 'collection' and templatename != 'thank_you' %}
+<script>
+  var source = 'https://app.redretarget.com/sapp/MY_Shopify/home/{{shop.permanent_domain}}/'+a_aid;
+  appendurl(source);
+</script>
+{% endif %}
+{% if templatename == 'product' %}
+<script>
+  var source = 'https://app.redretarget.com/sapp/MY_Shopify/product/{{shop.permanent_domain}}/'+a_aid+'/?pd_id={{product.id}}';
+  appendurl(source);
+</script>
+{% endif %}
+{% if templatename == 'cart' %}
+<script type='text/javascript' src='https://app.redretarget.com/sapp/assets/js/cart.js'></script>
+{% endif %}

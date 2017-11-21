@@ -1,0 +1,322 @@
+{% layout none %}<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+     xmlns:g="http://base.google.com/ns/1.0"
+     xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel> 
+    <title>{{shop.name | escape }} Products</title>
+    <description>The ultimate product feed for Facebook - part of the Pixel Perfect app by Keeping Shop</description> 
+    <link>{{shop.secure_url}}</link>
+    <atom:link href="{{shop.secure_url}}/pages/pp-facebook" rel="self" type="application/rss+xml" />
+
+  {% if shop.metafields.pixelperfect.settings != null %}	
+	{% assign appsettings = shop.metafields.pixelperfect.settings | remove: "[{" | remove: "}]" | strip | replace: '","', '"|||"' | split: '|||' %}		
+	{% for appsettingpair in appsettings %}
+		{% assign appsetting = appsettingpair	| strip | split: " : " %}
+		{% capture main %}{{ appsetting[0] | replace: '"', ''}}{% endcapture %}
+		{% case main %}
+			{% when 'pp_tracking_pixel_activated' %}
+				{% assign pp_tracking_pixel = appsetting[1] | replace: '"', '' %}
+            {% when 'pp_niche' %}
+				{% assign pp_niche = appsetting[1] | replace: '"', '' %}	
+		{% endcase%}	
+	{% endfor %}
+  
+  {% else %}
+  
+    {% assign pp_niche = 'off' %} 
+    {% assign pp_tracking_pixel = 'off' %}
+  
+{% endif %}
+  
+  {% if shop.metafields.pixelperfect.feedsettings != null %}	
+	{% assign feedsettings = shop.metafields.pixelperfect.feedsettings | remove: "[{" | remove: "}]" | strip | replace: '","', '"|||"' | split: '|||' %}		
+	{% for settingpair in feedsettings %}
+		{% assign setting = settingpair	| strip | split: " : " %}
+		{% capture main %}{{ setting[0] | replace: '"', ''}}{% endcapture %}
+		{% case main %}
+			{% when 'pp_feed_include_variants' %}
+				{% assign pp_variants = setting[1] | replace: '"', '' %}
+			{% when 'pp_feed_pagination' %}
+				{% assign pp_paginate = setting[1] | replace: '"', '' %}
+			{% when 'pp_feed_lowercase' %}
+				{% assign pp_lowercase = setting[1] | replace: '"', '' %}
+            {% when 'pp_feed_google_category' %}
+				{% assign pp_googlecategory = setting[1] | replace: '"', '' %}
+            {% when 'pp_feed_crop' %}
+				{% assign pp_crop = setting[1] | replace: '"', '' %}
+            {% when 'pp_feed_fbcustom' %}
+				{% assign pp_fbcustom = setting[1] | replace: '"', '' %}
+            {% when 'pp_feed_extimages' %}
+				{% assign pp_extimages = setting[1] | replace: '"', '' %}
+            {% when 'pp_feed_exturl' %}
+				{% assign pp_exturl = setting[1] | append: '/' | replace: '"', '' %}
+            {% when 'pp_feed_synccol' %}
+				{% assign pp_synccol = setting[1] | replace: '"', '' %}
+
+		{% endcase%}	
+	{% endfor %}
+  
+  {% if shop.metafields.pixelperfect.googlecategories != null %}
+   {% assign pp_google_category = shop.metafields.pixelperfect.googlecategories %}
+  {% endif%}
+  
+    {% else %}
+  
+    {% assign pp_paginate = '1000' %}
+    {% assign pp_variants = 'off' %}
+    {% assign pp_lowercase = 'off' %} 
+    {% assign pp_tagging = 'on' %}
+    {% assign pp_crop = 'off' %} 
+    {% assign pp_fbcustom = 'off' %} 
+    {% assign pp_extimages = 'off' %} 
+    {% assign pp_synccol = 'all' %}
+  
+    {% endif %} 
+  
+  {% if pp_fbcustom contains 'on' %}
+  
+    {% if shop.metafields.facebook.custom_label_0 != null %}
+    {% assign pp_label_0 = shop.metafields.facebook.custom_label_0 %}
+    {% else %}
+    {% assign pp_label_0 = 'Custom Label 0 is empty' %}
+    {% endif %}
+  
+    {% if shop.metafields.facebook.custom_label_1 != null %}
+    {% assign pp_label_1 = shop.metafields.facebook.custom_label_1 %}
+    {% else %}
+    {% assign pp_label_1 = 'Custom Label 1 is empty' %}
+    {% endif %}
+  
+    {% if shop.metafields.facebook.custom_label_2 != null %}
+    {% assign pp_label_2 = shop.metafields.facebook.custom_label_2 %}
+    {% else %}
+    {% assign pp_label_2 = 'Custom Label 2 is empty' %}
+    {% endif %}
+  
+    {% if shop.metafields.facebook.custom_label_3 != null %}
+    {% assign pp_label_3 = shop.metafields.facebook.custom_label_3 %}
+    {% else %}
+    {% assign pp_label_3 = 'Custom Label 3 is empty' %}
+    {% endif %}
+  
+    {% if shop.metafields.facebook.custom_label_4 != null %}
+    {% assign pp_label_4 = shop.metafields.facebook.custom_label_4 %}
+    {% else %}
+    {% assign pp_label_4 = 'Custom Label 4 is empty' %}
+    {% endif %}  
+  
+  {% endif %}
+  
+  
+  {% paginate collections[pp_synccol].products by pp_paginate %}
+  
+  {% for product in collections[pp_synccol].products %}
+  
+  {% if pp_variants contains 'on' %}
+ 
+  {% for variant in product.variants %}
+  
+  <item>
+    {% if pp_tracking_pixel contains 'shopify' %}
+<g:id>{{variant.id}}</g:id>
+{% else %}
+   <g:id>shopify_{{product.id}}_{{variant.id}}</g:id>
+{% endif %}
+   {% if pp_lowercase contains 'on' %}
+   <g:title><![CDATA[{{ product.title | strip_html | downcase | capitalize | strip_newlines | escape | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "u00c3u00a9", "e" | replace: '&quot;', '' | replace: "u00c3 ", "a" }}]]></g:title>
+   <g:description><![CDATA[{{ product.description | strip_html | downcase | capitalize | strip_newlines | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "..", ". " | replace: "  ", " " | replace: "u00e2u20acu02dc", "&#39;" | replace: "u00e2u20acu2122", "&#39;" | replace: "&#8216;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00e2u201eu00a2", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00c5u201c", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00cbu0153", "&#39;"  | replace: "u00c3u201au00c2u00b4", "&#39;" | replace: "u00e2u20acu0153", "&#34;" | replace: "u00e2u20ac ", "&#34;" | replace: "&#8211;", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20acu0153", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20ac ", "-" | replace: "u00e2u20acu201c", "&mdash;" | replace: "u00e2u20acu201d", "&mdash;" | replace: "%", "&#37;" | replace: "u00c3u201au00c2u00a9", "&copy;" | replace: "u00c3u201au00c2u00ae", "&reg;" | replace: "u00c3u00a2u00e2u20acu017eu00c2u00a2", "&trade;" | replace: "u00c3u201au00c2u00a3", "&pound;" | replace: "u00c3u00afu00c2u00bfu00c2u00ad", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2u00a2", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2 ", "&#39;" | replace: "&#233;", "e" | replace: "u00c3u00a9", "e" | replace: "u00c3 ", "a" | replace: "u00c3u00b3", "o" | replace: "u00c3u00aa", "e" | replace: "u00c3u0192u00cbu0153", "O" | replace: "&#8482;", "" | replace: "&#174;", "" }}]]></g:description>
+   {% else %}
+   <g:title><![CDATA[{{ product.title | strip_html | strip_newlines | escape | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "u00c3u00a9", "e" | replace: '&quot;', '' | replace: "u00c3 ", "a" }}]]></g:title>
+   <g:description><![CDATA[{{ product.description | strip_html | strip_newlines | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "..", ". " | replace: "  ", " " | replace: "u00e2u20acu02dc", "&#39;" | replace: "u00e2u20acu2122", "&#39;" | replace: "&#8216;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00e2u201eu00a2", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00c5u201c", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00cbu0153", "&#39;"  | replace: "u00c3u201au00c2u00b4", "&#39;" | replace: "u00e2u20acu0153", "&#34;" | replace: "u00e2u20ac ", "&#34;" | replace: "&#8211;", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20acu0153", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20ac ", "-" | replace: "u00e2u20acu201c", "&mdash;" | replace: "u00e2u20acu201d", "&mdash;" | replace: "%", "&#37;" | replace: "u00c3u201au00c2u00a9", "&copy;" | replace: "u00c3u201au00c2u00ae", "&reg;" | replace: "u00c3u00a2u00e2u20acu017eu00c2u00a2", "&trade;" | replace: "u00c3u201au00c2u00a3", "&pound;" | replace: "u00c3u00afu00c2u00bfu00c2u00ad", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2u00a2", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2 ", "&#39;" | replace: "&#233;", "e" | replace: "u00c3u00a9", "e" | replace: "u00c3 ", "a" | replace: "u00c3u00b3", "o" | replace: "u00c3u00aa", "e" | replace: "u00c3u0192u00cbu0153", "O" | replace: "&#8482;", "" | replace: "&#174;", "" }}]]></g:description>
+   {% endif %}
+   <g:link>{{shop.secure_url}}{{product.url}}</g:link>
+
+   {% if pp_extimages contains 'on' or pp_extimages contains 'tags' %}
+   
+    {% if pp_extimages contains 'tags' %}
+   {% for tag in product.tags %}
+   {% if tag contains 'external_image' %}
+     <g:image_link>{{pp_exturl | append: product.handle | append: '.jpg'}}</g:image_link> 
+    
+     {% else %}
+     {% if pp_crop contains 'on' %}
+     <g:image_link>https:{{product.featured_image | product_img_url: '600x600', crop: 'center'}}</g:image_link>
+     {% else %}
+     <g:image_link>https:{{product.featured_image | product_img_url: 'grande'}}</g:image_link>
+     {% endif %}
+     {% endif %}
+     {% endfor %}
+    
+    {% else %}
+    
+   <g:image_link>{{pp_exturl | append: product.handle | append: '.jpg'}}</g:image_link> 
+    
+    {% endif %}
+    
+   {% else %}
+   {% if pp_crop contains 'on' %}
+   <g:image_link>https:{{product.featured_image | product_img_url: '600x600', crop: 'center'}}</g:image_link>
+   {% else %}
+   <g:image_link>https:{{product.featured_image | product_img_url: 'grande'}}</g:image_link>
+   {% endif %}
+    
+   {% endif %}
+  
+   <g:brand>{{product.vendor | escape }}</g:brand>
+   <g:condition>new</g:condition>
+   <g:item_group_id>{{product.id}}</g:item_group_id>
+   
+   {%  if product.available %}
+   <g:availability>in stock</g:availability>
+   {% else %}
+   <g:availability>out of stock</g:availability>
+   {% endif %}
+   
+   {% if product.metafields.google.google_product_type %}
+   <g:google_product_category>{{ product.metafields.google.google_product_type | replace: '&', '&amp;' }}</g:google_product_category>
+   {% else %}
+   {% if pp_google_category %}
+   <g:google_product_category>{{ pp_google_category | replace: '&', '&amp;' }}</g:google_product_category>
+   {% endif %}
+   {% endif %}
+   
+    {% if pp_niche contains 'on' %}
+     {% assign pp_tag = product.type %}
+        {% for tag in product.tags %}
+          {% if tag contains "pp_" %}
+          {% capture pp_tmp %}{{tag | remove: "pp_" | capitalize | prepend: ',' }}{% endcapture %}
+          {% capture pp_tag %}{{product.type | append: pp_tmp }}{% endcapture %}
+          {% endif %}   
+        {% endfor %}
+    {% else %}
+        {% assign pp_tag = product.type %}
+    {% endif %}
+    
+   <g:product_type>{{pp_tag | replace: '&', '&amp;'}}</g:product_type>
+   <g:price>{{product.price | money_without_currency}}{{shop.currency}}</g:price>
+    
+       
+    
+     
+  </item>
+  {% endfor %}
+
+  {% else %}
+
+  <item>
+    {% if pp_tracking_pixel contains 'shopify' %}
+<g:id>{{product.id}}</g:id>
+{% else %}
+   <g:id>shopify_{{product.id}}</g:id>
+{% endif %}
+   {% if pp_lowercase contains 'on' %}
+   <g:title><![CDATA[{{ product.title | strip_html | downcase | capitalize | strip_newlines | escape | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "u00c3u00a9", "e" | replace: '&quot;', '' | replace: "u00c3 ", "a" }}]]></g:title>
+   <g:description><![CDATA[{{ product.description | strip_html | downcase | capitalize | strip_newlines | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "..", ". " | replace: "  ", " " | replace: "u00e2u20acu02dc", "&#39;" | replace: "u00e2u20acu2122", "&#39;" | replace: "&#8216;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00e2u201eu00a2", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00c5u201c", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00cbu0153", "&#39;"  | replace: "u00c3u201au00c2u00b4", "&#39;" | replace: "u00e2u20acu0153", "&#34;" | replace: "u00e2u20ac ", "&#34;" | replace: "&#8211;", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20acu0153", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20ac ", "-" | replace: "u00e2u20acu201c", "&mdash;" | replace: "u00e2u20acu201d", "&mdash;" | replace: "%", "&#37;" | replace: "u00c3u201au00c2u00a9", "&copy;" | replace: "u00c3u201au00c2u00ae", "&reg;" | replace: "u00c3u00a2u00e2u20acu017eu00c2u00a2", "&trade;" | replace: "u00c3u201au00c2u00a3", "&pound;" | replace: "u00c3u00afu00c2u00bfu00c2u00ad", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2u00a2", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2 ", "&#39;" | replace: "&#233;", "e" | replace: "u00c3u00a9", "e" | replace: "u00c3 ", "a" | replace: "u00c3u00b3", "o" | replace: "u00c3u00aa", "e" | replace: "u00c3u0192u00cbu0153", "O" | replace: "&#8482;", "" | replace: "&#174;", "" }}]]></g:description>
+   {% else %}
+   <g:title><![CDATA[{{ product.title | strip_html | strip_newlines | escape | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "u00c3u00a9", "e" | replace: '&quot;', '' | replace: "u00c3 ", "a" }}]]></g:title>
+   <g:description><![CDATA[{{ product.description | strip_html | strip_newlines | replace: '&amp;', 'and' | replace: 'amp;', 'and' | replace: '&#38;', 'and' | replace: "..", ". " | replace: "  ", " " | replace: "u00e2u20acu02dc", "&#39;" | replace: "u00e2u20acu2122", "&#39;" | replace: "&#8216;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "&#8217;", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00e2u201eu00a2", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00c5u201c", "&#39;" | replace: "u00c3u00a2u00e2u201au00acu00cbu0153", "&#39;"  | replace: "u00c3u201au00c2u00b4", "&#39;" | replace: "u00e2u20acu0153", "&#34;" | replace: "u00e2u20ac ", "&#34;" | replace: "&#8211;", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20acu0153", "-" | replace: "u00c3u00a2u00e2u201au00acu00e2u20ac ", "-" | replace: "u00e2u20acu201c", "&mdash;" | replace: "u00e2u20acu201d", "&mdash;" | replace: "%", "&#37;" | replace: "u00c3u201au00c2u00a9", "&copy;" | replace: "u00c3u201au00c2u00ae", "&reg;" | replace: "u00c3u00a2u00e2u20acu017eu00c2u00a2", "&trade;" | replace: "u00c3u201au00c2u00a3", "&pound;" | replace: "u00c3u00afu00c2u00bfu00c2u00ad", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2u00a2", "&#42;" | replace: "u00c3u00a2u00e2u201au00acu00c2 ", "&#39;" | replace: "&#233;", "e" | replace: "u00c3u00a9", "e" | replace: "u00c3 ", "a" | replace: "u00c3u00b3", "o" | replace: "u00c3u00aa", "e" | replace: "u00c3u0192u00cbu0153", "O" | replace: "&#8482;", "" | replace: "&#174;", "" }}]]></g:description>
+   {% endif %}
+   <g:link>{{shop.secure_url}}{{product.url}}</g:link>
+    
+   {% if pp_extimages contains 'on' or pp_extimages contains 'tags' %}
+   
+    {% if pp_extimages contains 'tags' %}
+   {% for tag in product.tags %}
+   {% if tag contains 'external_image' %}
+     <g:image_link>{{pp_exturl | append: product.handle | append: '.jpg'}}</g:image_link> 
+    
+     {% else %}
+     {% if pp_crop contains 'on' %}
+     <g:image_link>https:{{product.featured_image | product_img_url: '600x600', crop: 'center'}}</g:image_link>
+     {% else %}
+     <g:image_link>https:{{product.featured_image | product_img_url: 'grande'}}</g:image_link>
+     {% endif %}
+     {% endif %}
+     {% endfor %}
+    
+    {% else %}
+    
+   <g:image_link>{{pp_exturl | append: product.handle | append: '.jpg'}}</g:image_link> 
+    
+    {% endif %}
+    
+   {% else %}
+   {% if pp_crop contains 'on' %}
+   <g:image_link>https:{{product.featured_image | product_img_url: '600x600', crop: 'center'}}</g:image_link>
+   {% else %}
+   <g:image_link>https:{{product.featured_image | product_img_url: 'grande'}}</g:image_link>
+   {% endif %}
+    
+   {% endif %}
+  
+   <g:brand>{{product.vendor | escape }}</g:brand>
+   <g:condition>new</g:condition>
+   <g:item_group_id>{{product.id}}</g:item_group_id>
+   
+   {%  if product.available %}
+   <g:availability>in stock</g:availability>
+   {% else %}
+   <g:availability>out of stock</g:availability>
+   {% endif %}
+   
+   {% if product.metafields.google.google_product_type %}
+   <g:google_product_category>{{ product.metafields.google.google_product_type | replace: '&', '&amp;' }}</g:google_product_category>
+   {% else %}
+   {% if pp_google_category %}
+   <g:google_product_category>{{ pp_google_category | replace: '&', '&amp;' }}</g:google_product_category>
+   {% endif %}
+   {% endif %}
+       
+    {% if pp_niche contains 'on' %}
+     {% assign pp_tag = product.type %}
+        {% for tag in product.tags %}
+          {% if tag contains "pp_" %}
+          {% capture pp_tmp %}{{tag | remove: "pp_" | capitalize | prepend: ',' }}{% endcapture %}
+          {% capture pp_tag %}{{product.type | append: pp_tmp }}{% endcapture %}
+          {% endif %}   
+        {% endfor %}
+    {% else %}
+        {% assign pp_tag = product.type %}
+    {% endif %}
+    
+   {% if pp_fbcustom contains 'on' %}
+    
+   {% if product.metafields.facebook.custom_label_0 != null %}
+    <g:custom_label_0>{{ product.metafields.facebook.custom_label_0 }}</g:custom_label_0>
+   {% else %}
+    <g:custom_label_0>{{ pp_label_0 }}</g:custom_label_0>
+   {% endif %}
+   {% if product.metafields.facebook.custom_label_1 != null %}
+    <g:custom_label_1>{{ product.metafields.facebook.custom_label_1 }}</g:custom_label_1>
+   {% else %}
+    <g:custom_label_1>{{ pp_label_1 }}</g:custom_label_1>
+   {% endif %}
+   {% if product.metafields.facebook.custom_label_2 != null %}
+    <g:custom_label_2>{{ product.metafields.facebook.custom_label_2 }}</g:custom_label_2>
+    {% else %}
+    <g:custom_label_2>{{ pp_label_2 }}</g:custom_label_2>
+   {% endif %}
+   {% if product.metafields.facebook.custom_label_3 != null %}
+    <g:custom_label_3>{{ product.metafields.facebook.custom_label_3 }}</g:custom_label_3>
+    {% else %}
+    <g:custom_label_3>{{ pp_label_3 }}</g:custom_label_3>
+   {% endif %}
+   {% if product.metafields.facebook.custom_label_4 != null %}
+    <g:custom_label_4>{{ product.metafields.facebook.custom_label_4 }}</g:custom_label_4>
+    {% else %}
+    <g:custom_label_4>{{ pp_label_4 }}</g:custom_label_4>
+   {% endif %}
+    
+   {% endif %}
+ 
+   <g:product_type>{{pp_tag | replace: '&', '&amp;'}}</g:product_type>
+   <g:price>{{product.price | money_without_currency}}{{shop.currency}}</g:price>
+        
+  </item>
+  
+  {% endif %}
+
+  
+ {% endfor %}{% endpaginate %}
+</channel>
+</rss>

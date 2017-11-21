@@ -1,0 +1,316 @@
+{
+  "current": {
+    "testimonial_header": "<div><h2>Lorem dolor sit amet, consectetur adipiscing elit<\/h2><\/div>",
+    "user_text1": "<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit<\/div>",
+    "user_name1": "<div>Name Username<\/div>",
+    "user_text2": "<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit<\/div>",
+    "user_name2": "<div>Name Username<\/div>",
+    "user_text3": "<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit<\/div>",
+    "user_name3": "<div>Name Username<\/div>",
+    "testimonial": "<div>sfddsdsdsd<\/div>",
+    "why_buy_area": "<div><h3>Why buy from Fox Stark<\/h3><\/div>",
+    "reason1": "<div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit<\/p><\/div>",
+    "reason2": "<div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit<\/p><\/div>",
+    "reason3": "<div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit<\/p><\/div>",
+    "color_text": "#000000",
+    "color_body_text": "#000000",
+    "color_sale_text": "#ff4300",
+    "color_borders": "#ffffff",
+    "color_button": "#00c154",
+    "color_button_text": "#ffffff",
+    "color_small_button": "#eaeaea",
+    "color_small_button_text": "#3b3b3b",
+    "color_text_field": "#ffffff",
+    "color_text_field_text": "#646464",
+    "color_image_overlay_text": "#ffffff",
+    "color_image_overlay": "#000000",
+    "image_overlay_opacity": "0",
+    "color_body_bg": "#ffffff",
+    "type_header_family": "Google_Work+Sans_400_sans",
+    "type_header_base_size": "20px",
+    "type_base_family": "Google_Work+Sans_400_sans",
+    "type_base_size": "14px",
+    "type_bold_product_titles": true,
+    "share_facebook": true,
+    "share_twitter": true,
+    "share_pinterest": true,
+    "social_twitter_link": "",
+    "social_facebook_link": "http:\/\/facebook.com\/foxstarkishere",
+    "social_pinterest_link": "",
+    "social_instagram_link": "http:\/\/instagram.com\/foxstarkishere",
+    "social_tumblr_link": "",
+    "social_snapchat_link": "",
+    "social_youtube_link": "",
+    "social_vimeo_link": "",
+    "favicon": "shopify:\/\/shop_images\/Fox_stark-13.png",
+    "show_multiple_currencies": true,
+    "show_decimal_places": true,
+    "hide_decimal_places": false,
+    "currency_format": "money_with_currency_format",
+    "supported_currencies": "INR GBP CAD USD AUD EUR JPY",
+    "default_currency": "USD",
+    "checkout_header_image": "",
+    "checkout_logo_image": "shopify:\/\/shop_images\/checkout-image_b8e9dc9f-6436-4380-98de-70b4ffc21112.png",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "Helvetica Neue",
+    "checkout_body_font": "Helvetica Neue",
+    "checkout_accent_color": "#ff4300",
+    "checkout_button_color": "#00c154",
+    "checkout_error_color": "#ac0808",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "align_logo": "left",
+          "logo": "shopify:\/\/shop_images\/1.2-Logo_vertical.png",
+          "logo_max_width": "260",
+          "main_linklist": "main-menu",
+          "phone_text": "+1-800-806-0716",
+          "message": false,
+          "message_text": "TODAY: Worldwide shipping only $2.95 ❤",
+          "banner_text": "Want 5% DISCOUNT? Use discount code FOX5. Valid for 10 minutes.",
+          "message_link": "",
+          "colorbanner_bg": "#53d410",
+          "color_bg": "#000000",
+          "color_text": "#ffffff"
+        }
+      },
+      "hero": {
+        "type": "hero",
+        "settings": {
+          "image": "shopify:\/\/shop_images\/photo-1484081064812-86e90e107fa8.jpg",
+          "alignment": "center",
+          "title": "Check out our new collections.",
+          "text": "<p>Save up to 50% on selected items!<\/p>",
+          "hero_size": "medium",
+          "text_size": "large",
+          "button_label": "SHOP NOW",
+          "button_link": "shopify:\/\/collections"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_linklist": "footer",
+          "footer_linklist_two": "",
+          "phone_text": "+1-800-806-0716",
+          "footer_newsletter_enable": false,
+          "show_payment_icons": true
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "image_size": "medium",
+          "show_quantity_selector": false,
+          "show_variant_labels": true,
+          "show_vendor": false,
+          "enable_zoom": true,
+          "show_share_buttons": true
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "layout": "grid",
+          "grid": "4",
+          "rows": "6",
+          "show_collection_image": true,
+          "show_vendor": false,
+          "sort_enable": true,
+          "tags_enable": true
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "cart_notes_enable": false
+        }
+      },
+      "1495554487076": {
+        "type": "newsletter",
+        "settings": {
+          "title": "Join the tribe",
+          "subtitle": "Never miss the hot new products and deals, we promise to never spam you!",
+          "show_background": true
+        }
+      },
+      "1508981222613": {
+        "type": "collection-list",
+        "blocks": {
+          "1508981222613-0": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "gadgets"
+            }
+          },
+          "1508981222613-1": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "kids"
+            }
+          },
+          "1508981222613-2": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "christmas-gifts-decorations"
+            }
+          },
+          "1509358030931": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "cooking-baking"
+            }
+          },
+          "1509358056791": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "home-living"
+            }
+          },
+          "1509358043836": {
+            "type": "featured_collection",
+            "settings": {
+              "collection": "beauty"
+            }
+          }
+        },
+        "block_order": [
+          "1508981222613-0",
+          "1508981222613-1",
+          "1508981222613-2",
+          "1509358030931",
+          "1509358056791",
+          "1509358043836"
+        ],
+        "settings": {
+          "title": "Trending collections",
+          "grid": "3"
+        }
+      },
+      "1509357672432": {
+        "type": "collection",
+        "settings": {
+          "title": "Collection of the day",
+          "collection": "christmas-gifts-decorations",
+          "grid": "3",
+          "rows": "2",
+          "show_vendor": false,
+          "show_view_all": false
+        }
+      },
+      "1509357808487": {
+        "type": "custom-content",
+        "blocks": {
+          "1509357808487-0": {
+            "type": "text",
+            "settings": {
+              "title": "NOT JUST A VOYAGE… We Go and Bring back the World",
+              "text": "<p>How do you feel when a loved one goes on a journey and returns&hellip;with a special gift? Something new, that makes you dream of the lands where it came from&hellip; Something you will never want to lose, because you know you won&rsquo;t find it by just walking down the street or even going to the mall&hellip; Something exciting and just for you!<\/p>\n<p>It is a great feeling and at Fox Stark we want you to feel this way all of the time.<\/p>\n<p>Fox Stark&nbsp; is a store that was started by three friends after they met while travelling the world. The store was set up because they have a passion to share unique products that they discover during their travels round the world.<br><br>Fox Stark<\/p>",
+              "width": "100%",
+              "alignment": "center",
+              "align_text": "left"
+            }
+          }
+        },
+        "block_order": [
+          "1509357808487-0"
+        ],
+        "settings": {
+          "title": "About Fox Stark"
+        }
+      }
+    },
+    "content_for_index": [
+      "hero",
+      "1508981222613",
+      "1509357808487",
+      "1509357672432",
+      "1495554487076"
+    ]
+  },
+  "presets": {
+    "Default": {
+      "color_text": "#3d4246",
+      "color_body_text": "#788188",
+      "color_sale_text": "#7796A8",
+      "color_borders": "#e8e9eb",
+      "color_button": "#7796A8",
+      "color_button_text": "#fff",
+      "color_small_button": "#fff",
+      "color_small_button_text": "#3d4246",
+      "color_text_field": "#fff",
+      "color_text_field_text": "#000",
+      "color_image_overlay_text": "#fff",
+      "color_image_overlay": "#3d4246",
+      "image_overlay_opacity": "0.25",
+      "color_body_bg": "#fff",
+      "type_header_family": "Google_Work+Sans_600_sans",
+      "type_header_base_size": "26px",
+      "type_base_family": "Google_Work+Sans_400_sans",
+      "type_base_size": "16px",
+      "type_bold_product_titles": false,
+      "share_facebook": true,
+      "share_twitter": true,
+      "share_pinterest": true,
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {}
+        },
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "text_size": "large"
+          }
+        },
+        "slideshow": {
+          "type": "slideshow",
+          "blocks": {
+            "slideshow-0": {
+              "type": "image",
+              "settings": {}
+            },
+            "slideshow-1": {
+              "type": "image",
+              "settings": {}
+            }
+          },
+          "block_order": [
+            "slideshow-0",
+            "slideshow-1"
+          ],
+          "settings": {}
+        },
+        "featured-collections": {
+          "type": "collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "feature-row": {
+          "type": "feature-row",
+          "settings": {}
+        },
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "footer_linklist_two": ""
+          }
+        }
+      },
+      "content_for_index": [
+        "hero",
+        "featured-collections",
+        "feature-row",
+        "slideshow"
+      ]
+    }
+  }
+}
